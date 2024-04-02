@@ -1,14 +1,22 @@
+# Main Project file
+#Made with ❤️ by Harshil Malhotra
+#Github:- https://github.com/Harshilmalhotra
+#Linkedin:- https://www.linkedin.com/in/harshilmalhotra/
+
 import cv2
 import numpy as np
 import pickle
 import cvzone
 
+#Set width and height of rectangle or import it from already created file
 width, height = 107, 48
 with open('CarParkPos', 'rb') as f:
     posList = pickle.load(f)
 
+#open video file
 cap=cv2.VideoCapture('carPark.mp4')
 
+# Space counter function as well as display other metrics on the output
 def checkParkingSpace(imgPro):
     spaceCounter=0
     for pos in posList:
@@ -29,8 +37,11 @@ def checkParkingSpace(imgPro):
         # for pos in posList:
         cv2.rectangle(img, pos, (pos[0] + width, pos[1] + height), color, thickness)
         cvzone.putTextRect(img, str(count), (x, y + height - 5), scale=1.5, thickness=2, offset=0,colorR=color)
-    cvzone.putTextRect(img, str(spaceCounter), (50,50), scale=3, thickness=5, offset=20, colorR=(255,0,0))
+    cvzone.putTextRect(img,f'Empty Spots: {str(spaceCounter)}', (50,50), scale=3, thickness=5, offset=20, colorR=(255,0,0))
+    #Stamp
+    cvzone.putTextRect(img, "Made by Harshil Malhotra", (300, 700), scale=2, thickness=2, offset=5)
 
+# Image processing
 while True:
 
     if cap.get(cv2.CAP_PROP_POS_FRAMES) == cap.get(cv2.CAP_PROP_FRAME_COUNT):
@@ -44,11 +55,7 @@ while True:
     imgDilate=cv2.dilate(imgMedian,np.ones((3,3),np.uint8),iterations=1)
 
 
-    checkParkingSpace(imgDilate)
-
-
-
-
+    checkParkingSpace(imgDilate)   #Send the processed frame back to counter function
 
     cv2.imshow('image',img)
     # cv2.imshow('ImageBlur', imgMedian)

@@ -1,3 +1,8 @@
+#Use this file to draw rectangles using mouse on the image
+#Made with ❤️ by Harshil Malhotra
+#Github:- https://github.com/Harshilmalhotra
+#Linkedin:- https://www.linkedin.com/in/harshilmalhotra/
+
 import cv2
 import pickle
 
